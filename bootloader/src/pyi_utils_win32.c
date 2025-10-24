@@ -92,7 +92,7 @@ pyi_setenv(const char *variable, const char *value)
      *
      * Therefore, in order for modification to be visible to other CRT
      * functions (for example, `_wtempnam`), we must use `_wputenv_s`. */
-    rc = _wputenv_s(variable_w, value_w);
+    rc = COMPAT_FN(_wputenv_s)(variable_w, value_w);
 
     free(variable_w);
     free(value_w);
@@ -112,7 +112,7 @@ pyi_unsetenv(const char *variable)
     /* See the comment in `pyi_setenv`. As per MSDN, "You can remove a
      * variable from the environment by specifying an empty string (that
      * is, "") for value_string. */
-    rc = _wputenv_s(variable_w, L"");
+    rc = COMPAT_FN(_wputenv_s)(variable_w, L"");
 
     free(variable_w);
 
@@ -255,7 +255,7 @@ pyi_create_temporary_application_directory(struct PYI_CONTEXT *pyi_ctx)
         }
 
         /* Store the path in the TMP environment variable. */
-        rc = _wputenv_s(L"TMP", runtime_tmpdir_w);
+        rc = COMPAT_FN(_wputenv_s)(L"TMP", runtime_tmpdir_w);
         free(runtime_tmpdir_w);
         if (rc) {
             PYI_ERROR_W(L"LOADER: failed to set the TMP environment variable.\n");
@@ -524,7 +524,7 @@ LRESULT CALLBACK _hidden_window_wndproc(HWND hwnd, UINT uMsg, WPARAM wParam, LPA
              *
              * https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms700677(v=vs.85)
              */
-            if (!ShutdownBlockReasonCreate(hwnd, L"Needs to remove its temporary files.")) {
+            if (!COMPAT_FN(ShutdownBlockReasonCreate)(hwnd, L"Needs to remove its temporary files.")) {
                 PYI_DEBUG_W(L"LOADER: failed to register shutdown block reason (%d)!\n", GetLastError());
             }
             /* Set pyi_ctx->session_shutdown to let the rest of the code

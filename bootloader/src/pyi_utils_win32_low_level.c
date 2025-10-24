@@ -212,7 +212,7 @@ int pyi_win32_realpath(const wchar_t *path, wchar_t *resolved_path)
     }
 
     /* Fully resolve the path */
-    ret = GetFinalPathNameByHandleW(
+    ret = COMPAT_FN(GetFinalPathNameByHandleW)(
         handle,  /* hFile */
         resolved_path, /* lpszFilePath */
         PYI_PATH_MAX, /* cchFilePath */
