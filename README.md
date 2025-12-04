@@ -9,7 +9,7 @@ Ready-to-use builds are available here: [3dyd.github.io/pyinstaller-builds/](htt
 To build manually you need Python3 and MinGW (specifically mingw32 is enough):
 
 ```sh
-git clone --branch 6.16.0-xp --single-branch https://github.com/3dyd/pyinstaller.git
+git clone --branch 6.17.0-xp --single-branch https://github.com/3dyd/pyinstaller.git
 cd pyinstaller
 python -m venv .venv
 source .venv/bin/activate
