@@ -20,6 +20,7 @@
 
 #include <stdio.h> /* FILE */
 #include <inttypes.h> /* uint64_t */
+#include "pyi_compat.h"
 
 struct PYI_CONTEXT;
 

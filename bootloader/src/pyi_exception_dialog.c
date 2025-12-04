@@ -219,7 +219,7 @@ _exception_dialog_initialze(struct DIALOG_CONTEXT *dialog)
 #if 0
     dialog->hErrorIcon = LoadIconW(NULL, IDI_ERROR);
 #else
-    LoadIconMetric(NULL, IDI_ERROR, LIM_LARGE, &dialog->hErrorIcon);
+    COMPAT_FN(LoadIconMetric)(NULL, IDI_ERROR, LIM_LARGE, &dialog->hErrorIcon);
 #endif
 
     /*

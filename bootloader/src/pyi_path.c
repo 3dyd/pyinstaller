@@ -229,7 +229,7 @@ pyi_path_mksymlink(const char *link_target, const char *link_name)
     if (unprivileged_create_available) {
         flags |= SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE;
     }
-    if (CreateSymbolicLinkW(wlink_name, wlink_target, flags) == 0) {
+    if (COMPAT_FN(CreateSymbolicLinkW)(wlink_name, wlink_target, flags) == 0) {
         /* Check if the error was caused by use of SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE */
         if (unprivileged_create_available && GetLastError() == ERROR_INVALID_PARAMETER) {
             /* Disable it and try again */

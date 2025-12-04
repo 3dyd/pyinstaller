@@ -533,7 +533,7 @@ pyi_main(struct PYI_CONTEXT *pyi_ctx)
          * this instance. I.e., call SetDllDirectoryW(NULL) to reset
          * the search path modification that happens in the code block
          * that follows this one (and is inherited by child processes). */
-        SetDllDirectoryW(NULL);
+        COMPAT_FN(SetDllDirectoryW)(NULL);
 
         for (i = 0; i < sizeof(dll_names) / sizeof(dll_names[0]); i++) {
             const wchar_t *dll_name = dll_names[i];
@@ -557,7 +557,7 @@ pyi_main(struct PYI_CONTEXT *pyi_ctx)
             return -1;
         }
         PYI_DEBUG_W(L"LOADER: calling SetDllDirectoryW: %ls\n", dllpath_w);
-        SetDllDirectoryW(dllpath_w);
+        COMPAT_FN(SetDllDirectoryW)(dllpath_w);
     }
 #elif defined(__CYGWIN__)
     /* Under Cygwin, `dlopen()` uses `LD_LIBRARY_PATH` environment
@@ -592,7 +592,7 @@ pyi_main(struct PYI_CONTEXT *pyi_ctx)
          * if string contains Unicode characters, but we will take the
          * risk... */
         PYI_DEBUG("LOADER: calling SetDllDirectoryW: %S\n", dllpath_w);
-        SetDllDirectoryW(dllpath_w);
+        COMPAT_FN(SetDllDirectoryW)(dllpath_w);
 
         /* Modify `LD_LIBRARY_PATH`, but only if we are the parent process
          * of onefile application, or main process of onedir application.
